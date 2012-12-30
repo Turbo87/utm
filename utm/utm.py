@@ -17,8 +17,21 @@ ZONE_LETTERS = [
 ]
 
 
+class OutOfRangeError(ValueError):
+    pass
+
+
 def to_latlon(easting, northing, zone_number, zone_letter):
     zone_letter = zone_letter.upper()
+
+    if not 100000 <= easting < 1000000:
+        raise OutOfRangeError('easting out of range (must be between 100.000 m and 999.999 m)')
+    if not 0 <= northing <= 10000000:
+        raise OutOfRangeError('northing out of range (must be between 0 m and 10.000.000 m)')
+    if not 1 <= zone_number <= 60:
+        raise OutOfRangeError('zone number out of range (must be between 1 and 60)')
+    if not 'C' <= zone_letter <= 'X' or zone_letter in ['I', 'O']:
+        raise OutOfRangeError('zone letter out of range (must be between C and X)')
 
     x = easting - 500000
     y = northing
@@ -60,6 +73,11 @@ def to_latlon(easting, northing, zone_number, zone_letter):
 
 
 def from_latlon(latitude, longitude):
+    if not -80.0 <= latitude <= 84.0:
+        raise OutOfRangeError(u'latitude out of range (must be between 80 deg S and 84 deg N)')
+    if not -180.0 <= longitude <= 180.0:
+        raise OutOfRangeError('northing out of range (must be between 180 deg W and 180 deg E)')
+
     lat_rad = math.radians(latitude)
     lat_sin = math.sin(lat_rad)
     lat_cos = math.cos(lat_rad)
