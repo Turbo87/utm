@@ -74,7 +74,7 @@ def to_latlon(easting, northing, zone_number, zone_letter):
 
 def from_latlon(latitude, longitude):
     if not -80.0 <= latitude <= 84.0:
-        raise OutOfRangeError(u'latitude out of range (must be between 80 deg S and 84 deg N)')
+        raise OutOfRangeError('latitude out of range (must be between 80 deg S and 84 deg N)')
     if not -180.0 <= longitude <= 180.0:
         raise OutOfRangeError('northing out of range (must be between 180 deg W and 180 deg E)')
 
