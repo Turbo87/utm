@@ -18,5 +18,5 @@ setup(
         'Intended Audience :: Science/Research',
         'Topic :: Scientific/Engineering :: GIS',
     ],
-    py_modules=['utm'],
+    packages=['utm'],
 )
