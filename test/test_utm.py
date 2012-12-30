@@ -21,7 +21,7 @@ class KnownValues(unittest.TestCase):
     ]
 
     def test_from_latlon(self):
-        '''to_latlon should give known result with known input'''
+        '''from_latlon should give known result with known input'''
         for latlon, utm in self.known_values:
             result = UTM.from_latlon(*latlon)
             self.assert_utm_equal(utm, result)
