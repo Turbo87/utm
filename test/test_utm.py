@@ -2,7 +2,19 @@ import utm as UTM
 import unittest
 
 
-class KnownValues(unittest.TestCase):
+class UTMTestCase(unittest.TestCase):
+    def assert_utm_equal(self, a, b):
+        self.assertAlmostEqual(a[0], b[0], -1)
+        self.assertAlmostEqual(a[1], b[1], -1)
+        self.assertEqual(a[2], b[2])
+        self.assertEqual(a[3], b[3])
+
+    def assert_latlon_equal(self, a, b):
+        self.assertAlmostEqual(a[0], b[0], 3)
+        self.assertAlmostEqual(a[1], b[1], 3)
+
+
+class KnownValues(UTMTestCase):
     known_values = [
         # Aachen, Germany
         ((50.77535, 6.08389), (294409, 5628898, 32, 'U')),
@@ -32,15 +44,7 @@ class KnownValues(unittest.TestCase):
             result = UTM.to_latlon(*utm)
             self.assert_latlon_equal(latlon, result)
 
-    def assert_utm_equal(self, a, b):
-        self.assertAlmostEqual(a[0], b[0], -1)
-        self.assertAlmostEqual(a[1], b[1], -1)
-        self.assertEqual(a[2], b[2])
-        self.assertEqual(a[3], b[3])
 
-    def assert_latlon_equal(self, a, b):
-        self.assertAlmostEqual(a[0], b[0], 3)
-        self.assertAlmostEqual(a[1], b[1], 3)
 
 if __name__ == '__main__':
     unittest.main()
