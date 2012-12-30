@@ -18,6 +18,8 @@ ZONE_LETTERS = [
 
 
 def to_latlon(easting, northing, zone_number, zone_letter):
+    zone_letter = zone_letter.upper()
+
     x = easting - 500000
     y = northing
 
