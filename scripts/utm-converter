@@ -24,7 +24,7 @@ if all(arg in args for arg in ['easting', 'northing', 'zone_number', 'zone_lette
         print "utm-converter utm: error: too few arguments"
         exit()
 
-    coordinate = utm.to_latlon(args.easting, args.northing, 
+    coordinate = utm.to_latlon(args.easting, args.northing,
                         args.zone_number, args.zone_letter)
 
 elif all(arg in args for arg in ['latitude', 'longitude']):
