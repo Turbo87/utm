@@ -7,7 +7,7 @@ class UTMTestCase(unittest.TestCase):
         self.assertAlmostEqual(a[0], b[0], -1)
         self.assertAlmostEqual(a[1], b[1], -1)
         self.assertEqual(a[2], b[2])
-        self.assertEqual(a[3], b[3])
+        self.assertEqual(a[3].upper(), b[3].upper())
 
     def assert_latlon_equal(self, a, b):
         self.assertAlmostEqual(a[0], b[0], 3)
@@ -25,7 +25,7 @@ class KnownValues(UTMTestCase):
         # Capetown, South Africe
         ((-33.92487, 18.42406), (261878, 6243186, 34, 'H')),
         # Mendoza, Argentina
-        ((-32.89018, -68.84405), (514586, 6360877, 19, 'H')),
+        ((-32.89018, -68.84405), (514586, 6360877, 19, 'h')),
         # Fairbanks, Alaska, USA
         ((64.83778, -147.71639), (466013, 7190568, 6, 'W')),
         # Ben Nevis, Scotland, UK
