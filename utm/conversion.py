@@ -70,7 +70,7 @@ def to_latlon(easting, northing, zone_number, zone_letter):
     ep_sin_sqrt = math.sqrt(1 - E * p_sin2)
 
     n = R / ep_sin_sqrt
-    r = n * (1 - E) / ep_sin
+    r = (1 - E) / ep_sin
 
     c = _E * p_cos**2
     c2 = c * c
@@ -82,7 +82,7 @@ def to_latlon(easting, northing, zone_number, zone_letter):
     d5 = d4 * d
     d6 = d5 * d
 
-    latitude = (p_rad - (n * p_tan / r) *
+    latitude = (p_rad - (p_tan / r) *
                 (d2 / 2 -
                  d4 / 24 * (5 + 3 * p_tan2 + 10 * c - 4 * c2 - 9 * E_P2)) +
                  d6 / 720 * (61 + 90 * p_tan2 + 298 * c + 45 * p_tan4 - 252 * E_P2 - 3 * c2))
