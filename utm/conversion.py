@@ -10,6 +10,11 @@ E2 = E * E
 E3 = E2 * E
 E_P2 = E / (1.0 - E)
 
+M1 = (1 - E / 4 - 3 * E2 / 64 - 5 * E3 / 256)
+M2 = (3 * E / 8 + 3 * E2 / 32 + 45 * E3 / 1024)
+M3 = (15 * E2 / 256 + 45 * E3 / 1024)
+M4 = (35 * E3 / 3072)
+
 R = 6378137
 
 ZONE_LETTERS = [
@@ -39,7 +44,7 @@ def to_latlon(easting, northing, zone_number, zone_letter):
         y -= 10000000
 
     m = y / K0
-    mu = m / (R * (1 - E / 4 - 3 * E2 / 64 - 5 * E3 / 256))
+    mu = m / (R * M1)
 
     e = (1 - math.sqrt(1 - E)) / (1 + math.sqrt(1 - E))
     e3 = e * e * e
@@ -117,10 +122,10 @@ def from_latlon(latitude, longitude):
     a5 = a4 * a
     a6 = a5 * a
 
-    m = R * ((1 - E / 4 - 3 * E2 / 64 - 5 * E3 / 256) * lat_rad -
-             (3 * E / 8 + 3 * E2 / 32 + 45 * E3 / 1024) * math.sin(2 * lat_rad) +
-             (15 * E2 / 256 + 45 * E3 / 1024) * math.sin(4 * lat_rad) -
-             (35 * E3 / 3072) * math.sin(6 * lat_rad))
+    m = R * (M1 * lat_rad -
+             M2 * math.sin(2 * lat_rad) +
+             M3 * math.sin(4 * lat_rad) -
+             M4 * math.sin(6 * lat_rad))
 
     easting = K0 * n * (a +
                         a3 / 6 * (1 - lat_tan2 + c) +
