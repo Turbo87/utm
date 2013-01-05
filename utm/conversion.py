@@ -1,4 +1,5 @@
 import math
+from utm.error import OutOfRangeError
 
 __all__ = ['to_latlon', 'from_latlon']
 
@@ -15,10 +16,6 @@ ZONE_LETTERS = [
     (-24, 'K'), (-32, 'J'), (-40, 'H'), (-48, 'G'), (-56, 'F'), (-64, 'E'),
     (-72, 'D'), (-80, 'C')
 ]
-
-
-class OutOfRangeError(ValueError):
-    pass
 
 
 def to_latlon(easting, northing, zone_number, zone_letter):
