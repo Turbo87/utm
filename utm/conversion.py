@@ -6,6 +6,8 @@ __all__ = ['to_latlon', 'from_latlon']
 K0 = 0.9996
 
 E = 0.00669438
+E2 = E * E
+E3 = E2 * E
 E_P2 = E / (1.0 - E)
 
 R = 6378137
@@ -37,33 +39,47 @@ def to_latlon(easting, northing, zone_number, zone_letter):
         y -= 10000000
 
     m = y / K0
-    mu = m / (R * (1 - E / 4 - 3 * E**2 / 64 - 5 * E**3 / 256))
+    mu = m / (R * (1 - E / 4 - 3 * E2 / 64 - 5 * E3 / 256))
 
     e = (1 - math.sqrt(1 - E)) / (1 + math.sqrt(1 - E))
+    e3 = e * e * e
+    e4 = e3 * e
 
     p_rad = (mu +
-             (3 * e / 2 - 27 * e**3 / 32) * math.sin(2 * mu) +
-             (21 * e**3 / 16 - 55 * e**4 / 32) * math.sin(4 * mu) +
-             (151 * e**3 / 96) * math.sin(6 * mu))
+             (3 * e / 2 - 27 * e3 / 32) * math.sin(2 * mu) +
+             (21 * e3 / 16 - 55 * e4 / 32) * math.sin(4 * mu) +
+             (151 * e3 / 96) * math.sin(6 * mu))
 
     p_sin = math.sin(p_rad)
-    p_cos = math.cos(p_rad)
-    p_tan = p_sin / p_cos
+    p_sin2 = p_sin * p_sin
 
-    n = R / math.sqrt(1 - E * p_sin**2)
+    p_cos = math.cos(p_rad)
+
+    p_tan = p_sin / p_cos
+    p_tan2 = p_tan * p_tan
+    p_tan4 = p_tan2 * p_tan2
+
+    n = R / math.sqrt(1 - E * p_sin2)
+    r = R * (1 - E) / (1 - E * p_sin2)**1.5
+
     c = e * p_cos**2
-    r = R * (1 - E) / (1 - E * p_sin**2)**1.5
+    c2 = c * c
 
     d = x / (n * K0)
+    d2 = d * d
+    d3 = d2 * d
+    d4 = d3 * d
+    d5 = d4 * d
+    d6 = d5 * d
 
     latitude = (p_rad - (n * p_tan / r) *
-                (d**2 / 2 -
-                 d**4 / 24 * (5 + 3 * p_tan**2 + 10 * c - 4 * c**2 - 9 * E_P2)) +
-                 d**6 / 720 * (61 + 90 * p_tan**2 + 298 * c + 45 * p_tan**4 - 252 * E_P2 - 3 * c**2))
+                (d2 / 2 -
+                 d4 / 24 * (5 + 3 * p_tan2 + 10 * c - 4 * c2 - 9 * E_P2)) +
+                 d6 / 720 * (61 + 90 * p_tan2 + 298 * c + 45 * p_tan4 - 252 * E_P2 - 3 * c2))
 
     longitude = (d -
-                 d**3 / 6 * (1 + 2 * p_tan**2 + c) +
-                 d**5 / 120 * (5 - 2 * c + 28 * p_tan**2 - 3 * c**2 + 8 * E_P2 + 24 * p_tan**4)) / p_cos
+                 d3 / 6 * (1 + 2 * p_tan2 + c) +
+                 d5 / 120 * (5 - 2 * c + 28 * p_tan2 - 3 * c2 + 8 * E_P2 + 24 * p_tan4)) / p_cos
 
     return (math.degrees(latitude),
             math.degrees(longitude) + zone_number_to_central_longitude(zone_number))
@@ -78,7 +94,10 @@ def from_latlon(latitude, longitude):
     lat_rad = math.radians(latitude)
     lat_sin = math.sin(lat_rad)
     lat_cos = math.cos(lat_rad)
+
     lat_tan = lat_sin / lat_cos
+    lat_tan2 = lat_tan * lat_tan
+    lat_tan4 = lat_tan2 * lat_tan2
 
     lon_rad = math.radians(longitude)
 
@@ -92,19 +111,24 @@ def from_latlon(latitude, longitude):
     c = E_P2 * lat_cos**2
 
     a = lat_cos * (lon_rad - central_lon_rad)
+    a2 = a * a
+    a3 = a2 * a
+    a4 = a3 * a
+    a5 = a4 * a
+    a6 = a5 * a
 
-    m = R * ((1 - E / 4 - 3 * E**2 / 64 - 5 * E**3 / 256) * lat_rad -
-             (3 * E / 8 + 3 * E**2 / 32 + 45 * E**3 / 1024) * math.sin(2 * lat_rad) +
-             (15 * E**2 / 256 + 45 * E**3 / 1024) * math.sin(4 * lat_rad) -
-             (35 * E**3 / 3072) * math.sin(6 * lat_rad))
+    m = R * ((1 - E / 4 - 3 * E2 / 64 - 5 * E3 / 256) * lat_rad -
+             (3 * E / 8 + 3 * E2 / 32 + 45 * E3 / 1024) * math.sin(2 * lat_rad) +
+             (15 * E2 / 256 + 45 * E3 / 1024) * math.sin(4 * lat_rad) -
+             (35 * E3 / 3072) * math.sin(6 * lat_rad))
 
     easting = K0 * n * (a +
-                        a**3 / 6 * (1 - lat_tan**2 + c) +
-                        a**5 / 120 * (5 - 18 * lat_tan**2 + lat_tan**4 + 72 * c - 58 * E_P2)) + 500000
+                        a3 / 6 * (1 - lat_tan2 + c) +
+                        a5 / 120 * (5 - 18 * lat_tan2 + lat_tan4 + 72 * c - 58 * E_P2)) + 500000
 
-    northing = K0 * (m + n * lat_tan * (a**2 / 2 +
-                                        a**4 / 24 * (5 - lat_tan**2 + 9 * c + 4 * c**2) +
-                                        a**6 / 720 * (61 - 58 * lat_tan**2 + lat_tan**4 + 600 * c - 330 * E_P2)))
+    northing = K0 * (m + n * lat_tan * (a2 / 2 +
+                                        a4 / 24 * (5 - lat_tan2 + 9 * c + 4 * c**2) +
+                                        a6 / 720 * (61 - 58 * lat_tan2 + lat_tan4 + 600 * c - 330 * E_P2)))
 
     if latitude < 0:
         northing += 10000000
