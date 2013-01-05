@@ -22,6 +22,16 @@ Convert an UTM coordinate into a (latitude, longitude) tuple::
   utm.to_latlon(340000, 5710000, 32, 'U')
   >>> (51.51852098408468, 6.693872395145327)
 
+Speed
+-----
+
+The library has been compared to the more generic pyproj library by running the
+unit test suite through pyproj instead of utm. These are the results:
+
+* with pyproj (without projection cache): 4.0 - 4.5 sec
+* with pyproj (with projection cache): 0.9 - 1.0 sec
+* with utm: 0.4 - 0.5 sec
+
 Authors
 -------
 
