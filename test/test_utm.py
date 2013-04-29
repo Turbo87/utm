@@ -4,8 +4,8 @@ import unittest
 
 class UTMTestCase(unittest.TestCase):
     def assert_utm_equal(self, a, b):
-        self.assertAlmostEqual(a[0], b[0], -1)
-        self.assertAlmostEqual(a[1], b[1], -1)
+        self.assertAlmostEqual(a[0], b[0], 0)
+        self.assertAlmostEqual(a[1], b[1], 0)
         self.assertEqual(a[2], b[2])
         self.assertEqual(a[3].upper(), b[3].upper())
 
