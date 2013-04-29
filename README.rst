@@ -15,7 +15,7 @@ Usage
 Convert a (latitude, longitude) tuple into an UTM coordinate::
 
   utm.from_latlon(51.2, 7.5)
-  >>> (395201, 5673135, 32, 'U')
+  >>> (395201.3103811303, 5673135.241182375, 32, 'U')
 
 Convert an UTM coordinate into a (latitude, longitude) tuple::
 

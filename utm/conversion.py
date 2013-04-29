@@ -143,7 +143,7 @@ def from_latlon(latitude, longitude):
     if latitude < 0:
         northing += 10000000
 
-    return int(easting), int(northing), zone_number, zone_letter
+    return easting, northing, zone_number, zone_letter
 
 
 def latitude_to_zone_letter(latitude):
