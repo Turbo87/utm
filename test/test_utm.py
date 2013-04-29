@@ -22,7 +22,7 @@ class KnownValues(UTMTestCase):
         ((40.71435, -74.00597), (583960, 4507523, 18, 'T')),
         # Wellington, New Zealand
         ((-41.28646, 174.77624), (313784, 5427057, 60, 'G')),
-        # Capetown, South Africe
+        # Capetown, South Africa
         ((-33.92487, 18.42406), (261878, 6243186, 34, 'H')),
         # Mendoza, Argentina
         ((-32.89018, -68.84405), (514586, 6360877, 19, 'h')),
