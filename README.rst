@@ -17,10 +17,18 @@ Convert a (latitude, longitude) tuple into an UTM coordinate::
   utm.from_latlon(51.2, 7.5)
   >>> (395201.3103811303, 5673135.241182375, 32, 'U')
 
+The syntax is **utm.from_latlon(LATITUDE, LONGITUDE)**.
+
 Convert an UTM coordinate into a (latitude, longitude) tuple::
 
   utm.to_latlon(340000, 5710000, 32, 'U')
   >>> (51.51852098408468, 6.693872395145327)
+
+The syntax is **utm.to_latlon(EASTING, NORTHING, ZONE NUMBER, ZONE LETTER)**.
+
+The UTM coordinate system is explained on
+[this](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)
+Wikipedia page.
 
 Speed
 -----
