@@ -10,8 +10,8 @@ class UTMTestCase(unittest.TestCase):
         self.assertEqual(a[3].upper(), b[3].upper())
 
     def assert_latlon_equal(self, a, b):
-        self.assertAlmostEqual(a[0], b[0], 3)
-        self.assertAlmostEqual(a[1], b[1], 3)
+        self.assertAlmostEqual(a[0], b[0], 4)
+        self.assertAlmostEqual(a[1], b[1], 4)
 
 
 class KnownValues(UTMTestCase):

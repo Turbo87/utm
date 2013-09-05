@@ -12,17 +12,20 @@ E_P2 = E / (1.0 - E)
 
 SQRT_E = math.sqrt(1 - E)
 _E = (1 - SQRT_E) / (1 + SQRT_E)
-_E3 = _E * _E * _E
+_E2 = _E * _E
+_E3 = _E2 * _E
 _E4 = _E3 * _E
+_E5 = _E3 * _E
 
 M1 = (1 - E / 4 - 3 * E2 / 64 - 5 * E3 / 256)
 M2 = (3 * E / 8 + 3 * E2 / 32 + 45 * E3 / 1024)
 M3 = (15 * E2 / 256 + 45 * E3 / 1024)
 M4 = (35 * E3 / 3072)
 
-P2 = (3 * _E / 2 - 27 * _E3 / 32)
-P3 = (21 * _E3 / 16 - 55 * _E4 / 32)
-P4 = (151 * _E3 / 96)
+P2 = (3. / 2 * _E - 27. / 32 * _E3 + 269. / 512 * _E5)
+P3 = (21. / 16 * _E2 - 55. / 32 * _E4)
+P4 = (151. / 96 * _E3 - 417. / 128 * _E5)
+P5 = (1097. / 512 * _E4)
 
 R = 6378137
 
@@ -55,7 +58,11 @@ def to_latlon(easting, northing, zone_number, zone_letter):
     m = y / K0
     mu = m / (R * M1)
 
-    p_rad = (mu + P2 * math.sin(2 * mu) + P3 * math.sin(4 * mu) + P4 * math.sin(6 * mu))
+    p_rad = (mu +
+             P2 * math.sin(2 * mu) +
+             P3 * math.sin(4 * mu) +
+             P4 * math.sin(6 * mu) +
+             P5 * math.sin(8 * mu))
 
     p_sin = math.sin(p_rad)
     p_sin2 = p_sin * p_sin
