@@ -31,7 +31,7 @@ The syntax is **utm.to_latlon(EASTING, NORTHING, ZONE NUMBER, ZONE LETTER)**.
 The return has the form **(LATITUDE, LONGITUDE)**.
 
 The UTM coordinate system is explained on
-[this](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)
+`this <https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system>`_
 Wikipedia page.
 
 Speed
