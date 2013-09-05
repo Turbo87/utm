@@ -68,7 +68,7 @@ class BadInput(UTMTestCase):
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 100, 300)
 
     def test_to_latlon_range_checks(self):
-        '''from_latlon should fail with out-of-bounds input'''
+        '''to_latlon should fail with out-of-bounds input'''
         self.assertRaises(UTM.OutOfRangeError, UTM.to_latlon, 0, 5000000, 32, 'U')
         self.assertRaises(UTM.OutOfRangeError, UTM.to_latlon, 99999, 5000000, 32, 'U')
         for i in range(100000, 999999, 1000):
