@@ -44,6 +44,13 @@ unit test suite through pyproj instead of utm. These are the results:
 * with pyproj (with projection cache): 0.9 - 1.0 sec
 * with utm: 0.4 - 0.5 sec
 
+Development
+-----------
+
+Create a new ``virtualenv`` and install the library via ``pip install -e .``.
+After that install the ``pytest`` package via ``pip install pytest`` and run
+the unit test suite by calling ``py.test``.
+
 Authors
 -------
 
