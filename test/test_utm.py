@@ -17,31 +17,62 @@ class UTMTestCase(unittest.TestCase):
 class KnownValues(UTMTestCase):
     known_values = [
         # Aachen, Germany
-        ((50.77535, 6.08389), (294409, 5628898, 32, 'U')),
+        (
+            (50.77535, 6.08389),
+            (294409, 5628898, 32, 'U'),
+            {'northern': True},
+        ),
         # New York, USA
-        ((40.71435, -74.00597), (583960, 4507523, 18, 'T')),
+        (
+            (40.71435, -74.00597),
+            (583960, 4507523, 18, 'T'),
+            {'northern': True},
+        ),
         # Wellington, New Zealand
-        ((-41.28646, 174.77624), (313784, 5427057, 60, 'G')),
+        (
+            (-41.28646, 174.77624),
+            (313784, 5427057, 60, 'G'),
+            {'northern': False},
+        ),
         # Capetown, South Africa
-        ((-33.92487, 18.42406), (261878, 6243186, 34, 'H')),
+        (
+            (-33.92487, 18.42406),
+            (261878, 6243186, 34, 'H'),
+            {'northern': False},
+        ),
         # Mendoza, Argentina
-        ((-32.89018, -68.84405), (514586, 6360877, 19, 'h')),
+        (
+            (-32.89018, -68.84405),
+            (514586, 6360877, 19, 'h'),
+            {'northern': False},
+        ),
         # Fairbanks, Alaska, USA
-        ((64.83778, -147.71639), (466013, 7190568, 6, 'W')),
+        (
+            (64.83778, -147.71639),
+            (466013, 7190568, 6, 'W'),
+            {'northern': True},
+        ),
         # Ben Nevis, Scotland, UK
-        ((56.79680, -5.00601), (377486, 6296562, 30, 'V')),
+        (
+            (56.79680, -5.00601),
+            (377486, 6296562, 30, 'V'),
+            {'northern': True},
+        ),
     ]
 
     def test_from_latlon(self):
         '''from_latlon should give known result with known input'''
-        for latlon, utm in self.known_values:
+        for latlon, utm, _ in self.known_values:
             result = UTM.from_latlon(*latlon)
             self.assert_utm_equal(utm, result)
 
     def test_to_latlon(self):
         '''to_latlon should give known result with known input'''
-        for latlon, utm in self.known_values:
+        for latlon, utm, utm_kw in self.known_values:
             result = UTM.to_latlon(*utm)
+            self.assert_latlon_equal(latlon, result)
+
+            result = UTM.to_latlon(*utm[0:3], **utm_kw)
             self.assert_latlon_equal(latlon, result)
 
 

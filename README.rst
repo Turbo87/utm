@@ -30,6 +30,11 @@ The syntax is **utm.to_latlon(EASTING, NORTHING, ZONE NUMBER, ZONE LETTER)**.
 
 The return has the form **(LATITUDE, LONGITUDE)**.
 
+Since the zone letter is not strictly needed for the conversion you may also
+the ``northern`` parameter instead, which is a named parameter and can be set
+to either ``True`` or ``False``. Have a look at the unit tests to see how it
+can be used.
+
 The UTM coordinate system is explained on
 `this <https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system>`_
 Wikipedia page.
