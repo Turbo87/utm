@@ -113,7 +113,7 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None):
             math.degrees(longitude) + zone_number_to_central_longitude(zone_number))
 
 
-def from_latlon(latitude, longitude):
+def from_latlon(latitude, longitude, force_zone_number = None):
     if not -80.0 <= latitude <= 84.0:
         raise OutOfRangeError('latitude out of range (must be between 80 deg S and 84 deg N)')
     if not -180.0 <= longitude <= 180.0:
@@ -128,8 +128,10 @@ def from_latlon(latitude, longitude):
     lat_tan4 = lat_tan2 * lat_tan2
 
     lon_rad = math.radians(longitude)
-
-    zone_number = latlon_to_zone_number(latitude, longitude)
+    if force_zone_number is None:
+        zone_number = latlon_to_zone_number(latitude, longitude)
+    else:
+        zone_number = force_zone_number
     central_lon = zone_number_to_central_longitude(zone_number)
     central_lon_rad = math.radians(central_lon)
 
