@@ -56,6 +56,11 @@ Create a new ``virtualenv`` and install the library via ``pip install -e .``.
 After that install the ``pytest`` package via ``pip install pytest`` and run
 the unit test suite by calling ``py.test``.
 
+Changelog
+---------
+
+see `CHANGELOG.rst <CHANGELOG.rst>`_ file
+
 Authors
 -------
 
