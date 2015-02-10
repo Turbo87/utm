@@ -59,7 +59,9 @@ the unit test suite by calling ``py.test``.
 Authors
 -------
 
+* Bart van Andel <bavanandel@gmail.com>
 * Tobias Bieniek <Tobias.Bieniek@gmx.de>
+* Torstein I. Bø
 
 License
 -------
