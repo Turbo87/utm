@@ -1,6 +1,13 @@
 Changelog
 =========
 
+v0.4.0
+------
+
+* added optional ``force_zone_number`` parameter to ``from_latlon()`` (#8)
+* fixed minor precision error (#9)
+
+
 v0.3.1
 ------
 
