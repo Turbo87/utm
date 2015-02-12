@@ -8,3 +8,12 @@ python:
 install: "pip install . --use-mirrors"
 # command to run tests, e.g. python setup.py test
 script:  py.test -v
+
+deploy:
+  provider: pypi
+  user: Tobias.Bieniek
+  password:
+    secure: mVcE9/IJSArULbN+QOTjm9l/J3w3BgZ/uSJ+j4V0w4TUjQFscMZjACO9ZiDNc/W63s2QWDrPsWOCeyNemIIL06MzSnBplhGUkDt4TVAeaACKx2Q9WI7oorvaKxrp503FfiHOTzSrBp59oXaYy08Y9W3nP2Ek5DdIu9Pgz1vjNic=
+  on:
+    tags: true
+    repo: Turbo87/utm
