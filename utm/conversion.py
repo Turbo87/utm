@@ -117,7 +117,7 @@ def from_latlon(latitude, longitude, force_zone_number=None):
     if not -80.0 <= latitude <= 84.0:
         raise OutOfRangeError('latitude out of range (must be between 80 deg S and 84 deg N)')
     if not -180.0 <= longitude <= 180.0:
-        raise OutOfRangeError('northing out of range (must be between 180 deg W and 180 deg E)')
+        raise OutOfRangeError('longitude out of range (must be between 180 deg W and 180 deg E)')
 
     lat_rad = math.radians(latitude)
     lat_sin = math.sin(lat_rad)
