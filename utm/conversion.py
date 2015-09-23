@@ -176,7 +176,7 @@ def latitude_to_zone_letter(latitude):
 
 
 def latlon_to_zone_number(latitude, longitude):
-    if 56 <= latitude <= 64 and 3 <= longitude <= 12:
+    if 56 <= latitude < 64 and 3 <= longitude < 12:
         return 32
 
     if 72 <= latitude <= 84 and longitude >= 0:

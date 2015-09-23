@@ -173,5 +173,57 @@ class BadInput(UTMTestCase):
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 32, 'Z')
 
+
+class Zone32V(unittest.TestCase):
+
+    def assert_zone_equal(self, result, expected_number, expected_letter):
+        self.assertEqual(result[2], expected_number)
+        self.assertEqual(result[3].upper(), expected_letter.upper())
+
+    def test_inside(self):
+        self.assert_zone_equal(UTM.from_latlon(56, 3), 32, 'V')
+        self.assert_zone_equal(UTM.from_latlon(56, 6), 32, 'V')
+        self.assert_zone_equal(UTM.from_latlon(56, 9), 32, 'V')
+        self.assert_zone_equal(UTM.from_latlon(56, 11.999999), 32, 'V')
+
+        self.assert_zone_equal(UTM.from_latlon(60, 3), 32, 'V')
+        self.assert_zone_equal(UTM.from_latlon(60, 6), 32, 'V')
+        self.assert_zone_equal(UTM.from_latlon(60, 9), 32, 'V')
+        self.assert_zone_equal(UTM.from_latlon(60, 11.999999), 32, 'V')
+
+        self.assert_zone_equal(UTM.from_latlon(63.999999, 3), 32, 'V')
+        self.assert_zone_equal(UTM.from_latlon(63.999999, 6), 32, 'V')
+        self.assert_zone_equal(UTM.from_latlon(63.999999, 9), 32, 'V')
+        self.assert_zone_equal(UTM.from_latlon(63.999999, 11.999999), 32, 'V')
+
+    def test_left_of(self):
+        self.assert_zone_equal(UTM.from_latlon(55.999999, 2.999999), 31, 'U')
+        self.assert_zone_equal(UTM.from_latlon(56, 2.999999), 31, 'V')
+        self.assert_zone_equal(UTM.from_latlon(60, 2.999999), 31, 'V')
+        self.assert_zone_equal(UTM.from_latlon(63.999999, 2.999999), 31, 'V')
+        self.assert_zone_equal(UTM.from_latlon(64, 2.999999), 31, 'W')
+
+    def test_right_of(self):
+        self.assert_zone_equal(UTM.from_latlon(55.999999, 12), 33, 'U')
+        self.assert_zone_equal(UTM.from_latlon(56, 12), 33, 'V')
+        self.assert_zone_equal(UTM.from_latlon(60, 12), 33, 'V')
+        self.assert_zone_equal(UTM.from_latlon(63.999999, 12), 33, 'V')
+        self.assert_zone_equal(UTM.from_latlon(64, 12), 33, 'W')
+
+    def test_below(self):
+        self.assert_zone_equal(UTM.from_latlon(55.999999, 3), 31, 'U')
+        self.assert_zone_equal(UTM.from_latlon(55.999999, 6), 32, 'U')
+        self.assert_zone_equal(UTM.from_latlon(55.999999, 9), 32, 'U')
+        self.assert_zone_equal(UTM.from_latlon(55.999999, 11.999999), 32, 'U')
+        self.assert_zone_equal(UTM.from_latlon(55.999999, 12), 33, 'U')
+
+    def test_above(self):
+        self.assert_zone_equal(UTM.from_latlon(64, 3), 31, 'W')
+        self.assert_zone_equal(UTM.from_latlon(64, 6), 32, 'W')
+        self.assert_zone_equal(UTM.from_latlon(64, 9), 32, 'W')
+        self.assert_zone_equal(UTM.from_latlon(64, 11.999999), 32, 'W')
+        self.assert_zone_equal(UTM.from_latlon(64, 12), 33, 'W')
+
+
 if __name__ == '__main__':
     unittest.main()
