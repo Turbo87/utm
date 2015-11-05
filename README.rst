@@ -8,11 +8,13 @@ Bidirectional UTM-WGS84 converter for python
 Usage
 -----
 
-::
+.. code-block:: python
 
   import utm
 
-Convert a (latitude, longitude) tuple into an UTM coordinate::
+Convert a (latitude, longitude) tuple into an UTM coordinate:
+
+.. code-block:: python
 
   utm.from_latlon(51.2, 7.5)
   >>> (395201.3103811303, 5673135.241182375, 32, 'U')
@@ -21,7 +23,9 @@ The syntax is **utm.from_latlon(LATITUDE, LONGITUDE)**.
 
 The return has the form **(EASTING, NORTHING, ZONE NUMBER, ZONE LETTER)**.
 
-Convert an UTM coordinate into a (latitude, longitude) tuple::
+Convert an UTM coordinate into a (latitude, longitude) tuple:
+
+.. code-block:: python
 
   utm.to_latlon(340000, 5710000, 32, 'U')
   >>> (51.51852098408468, 6.693872395145327)
