@@ -29,16 +29,10 @@ P5 = (1097. / 512 * _E4)
 
 R = 6378137
 
-ZONE_LETTERS = [
-    (84, None), (72, 'X'), (64, 'W'), (56, 'V'), (48, 'U'), (40, 'T'),
-    (32, 'S'), (24, 'R'), (16, 'Q'), (8, 'P'), (0, 'N'), (-8, 'M'), (-16, 'L'),
-    (-24, 'K'), (-32, 'J'), (-40, 'H'), (-48, 'G'), (-56, 'F'), (-64, 'E'),
-    (-72, 'D'), (-80, 'C')
-]
+ZONE_LETTERS = "CDEFGHJKLMNPQRSTUVWXX"
 
 
 def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None):
-
     if not zone_letter and northern is None:
         raise ValueError('either zone_letter or northern needs to be set')
 
@@ -90,7 +84,7 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None):
     n = R / ep_sin_sqrt
     r = (1 - E) / ep_sin
 
-    c = _E * p_cos**2
+    c = _E * p_cos ** 2
     c2 = c * c
 
     d = x / (n * K0)
@@ -103,7 +97,7 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None):
     latitude = (p_rad - (p_tan / r) *
                 (d2 / 2 -
                  d4 / 24 * (5 + 3 * p_tan2 + 10 * c - 4 * c2 - 9 * E_P2)) +
-                 d6 / 720 * (61 + 90 * p_tan2 + 298 * c + 45 * p_tan4 - 252 * E_P2 - 3 * c2))
+                d6 / 720 * (61 + 90 * p_tan2 + 298 * c + 45 * p_tan4 - 252 * E_P2 - 3 * c2))
 
     longitude = (d -
                  d3 / 6 * (1 + 2 * p_tan2 + c) +
@@ -138,8 +132,8 @@ def from_latlon(latitude, longitude, force_zone_number=None):
     central_lon = zone_number_to_central_longitude(zone_number)
     central_lon_rad = math.radians(central_lon)
 
-    n = R / math.sqrt(1 - E * lat_sin**2)
-    c = E_P2 * lat_cos**2
+    n = R / math.sqrt(1 - E * lat_sin ** 2)
+    c = E_P2 * lat_cos ** 2
 
     a = lat_cos * (lon_rad - central_lon_rad)
     a2 = a * a
@@ -158,7 +152,7 @@ def from_latlon(latitude, longitude, force_zone_number=None):
                         a5 / 120 * (5 - 18 * lat_tan2 + lat_tan4 + 72 * c - 58 * E_P2)) + 500000
 
     northing = K0 * (m + n * lat_tan * (a2 / 2 +
-                                        a4 / 24 * (5 - lat_tan2 + 9 * c + 4 * c**2) +
+                                        a4 / 24 * (5 - lat_tan2 + 9 * c + 4 * c ** 2) +
                                         a6 / 720 * (61 - 58 * lat_tan2 + lat_tan4 + 600 * c - 330 * E_P2)))
 
     if latitude < 0:
@@ -168,11 +162,10 @@ def from_latlon(latitude, longitude, force_zone_number=None):
 
 
 def latitude_to_zone_letter(latitude):
-    for lat_min, zone_letter in ZONE_LETTERS:
-        if latitude >= lat_min:
-            return zone_letter
-
-    return None
+    if -80 <= latitude <= 84:
+        return ZONE_LETTERS[int(latitude + 80) >> 3]
+    else:
+        return None
 
 
 def latlon_to_zone_number(latitude, longitude):

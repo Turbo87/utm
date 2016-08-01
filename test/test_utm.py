@@ -58,6 +58,12 @@ class KnownValues(UTMTestCase):
             (377486, 6296562, 30, 'V'),
             {'northern': True},
         ),
+        # Latitude 84
+        (
+            (84, -5.00601),
+            (476594, 9328501, 30, 'X'),
+            {'northern': True},
+        ),
     ]
 
     def test_from_latlon(self):
