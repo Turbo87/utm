@@ -1,6 +1,14 @@
 Changelog
 =========
 
+v0.4.1
+------
+
+* fixed missing zone letter for latitude 84 deg.
+* fixed ``from_lat_lon()`` longitude error message
+* fixed zone numbers for 32V and related regions
+
+
 v0.4.0
 ------
 
