@@ -32,7 +32,7 @@ R = 6378137
 ZONE_LETTERS = "CDEFGHJKLMNPQRSTUVWXX"
 
 
-def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None):
+def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, strict=True):
 
     if not zone_letter and northern is None:
         raise ValueError('either zone_letter or northern needs to be set')
@@ -40,10 +40,11 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None):
     elif zone_letter and northern is not None:
         raise ValueError('set either zone_letter or northern, but not both')
 
-    if not 100000 <= easting < 1000000:
-        raise OutOfRangeError('easting out of range (must be between 100.000 m and 999.999 m)')
-    if not 0 <= northing <= 10000000:
-        raise OutOfRangeError('northing out of range (must be between 0 m and 10.000.000 m)')
+    if strict:
+        if not 100000 <= easting < 1000000:
+            raise OutOfRangeError('easting out of range (must be between 100.000 m and 999.999 m)')
+        if not 0 <= northing <= 10000000:
+            raise OutOfRangeError('northing out of range (must be between 0 m and 10.000.000 m)')
     if not 1 <= zone_number <= 60:
         raise OutOfRangeError('zone number out of range (must be between 1 and 60)')
 
