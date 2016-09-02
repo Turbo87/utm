@@ -1,17 +1,31 @@
 import utm as UTM
 import unittest
 
+try:
+    import numpy as np
+    use_numpy = True
+except ImportError:
+    use_numpy = False
+
 
 class UTMTestCase(unittest.TestCase):
     def assert_utm_equal(self, a, b):
-        self.assertAlmostEqual(a[0], b[0], 0)
-        self.assertAlmostEqual(a[1], b[1], 0)
+        if use_numpy and isinstance(b[0], np.ndarray):
+            self.assertTrue(np.allclose(a[0], b[0]))
+            self.assertTrue(np.allclose(a[1], b[1]))
+        else:
+            self.assertAlmostEqual(a[0], b[0], 0)
+            self.assertAlmostEqual(a[1], b[1], 0)
         self.assertEqual(a[2], b[2])
         self.assertEqual(a[3].upper(), b[3].upper())
 
     def assert_latlon_equal(self, a, b):
-        self.assertAlmostEqual(a[0], b[0], 4)
-        self.assertAlmostEqual(a[1], b[1], 4)
+        if use_numpy and isinstance(b[0], np.ndarray):
+            self.assertTrue(np.allclose(a[0], b[0], rtol=1e-4, atol=1e-4))
+            self.assertTrue(np.allclose(a[1], b[1], rtol=1e-4, atol=1e-4))
+        else:
+            self.assertAlmostEqual(a[0], b[0], 4)
+            self.assertAlmostEqual(a[1], b[1], 4)
 
 
 class KnownValues(UTMTestCase):
@@ -72,6 +86,24 @@ class KnownValues(UTMTestCase):
             result = UTM.from_latlon(*latlon)
             self.assert_utm_equal(utm, result)
 
+    def test_from_latlon_numpy(self):
+        if not use_numpy:
+            return
+        lats = np.array([0.0, 3.0, 6.0])
+        lons = np.array([0.0, 1.0, 3.4])
+        result = UTM.from_latlon(lats, lons)
+        self.assert_utm_equal((np.array([166021.44317933032,
+                                         277707.83075574087,
+                                         544268.12794623]),
+                               np.array([0.0,
+                                         331796.29167519242,
+                                         663220.7198366751]),
+                               31, 'N'), result)
+
+        for latlon, utm, _ in self.known_values:
+            result = UTM.from_latlon(*[np.array([x]) for x in latlon])
+            self.assert_utm_equal(utm, result)
+
     def test_to_latlon(self):
         '''to_latlon should give known result with known input'''
         for latlon, utm, utm_kw in self.known_values:
@@ -79,6 +111,25 @@ class KnownValues(UTMTestCase):
             self.assert_latlon_equal(latlon, result)
 
             result = UTM.to_latlon(*utm[0:3], **utm_kw)
+            self.assert_latlon_equal(latlon, result)
+
+    def test_to_latlon_numpy(self):
+        if not use_numpy:
+            return
+        result = UTM.to_latlon(np.array([166021.44317933032,
+                                         277707.83075574087,
+                                         544268.12794623]),
+                               np.array([0.0,
+                                         331796.29167519242,
+                                         663220.7198366751]),
+                               31, northern=True)
+        self.assert_latlon_equal((np.array([0.0, 3.0, 6.0]),
+                                  np.array([0.0, 1.0, 3.4])),
+                                 result)
+
+        for latlon, utm, utm_kw in self.known_values:
+            utm = [np.array([x]) for x in utm[:2]] + list(utm[2:])
+            result = UTM.to_latlon(*utm)
             self.assert_latlon_equal(latlon, result)
 
 
