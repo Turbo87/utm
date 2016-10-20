@@ -134,6 +134,23 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
 
 
 def from_latlon(latitude, longitude, force_zone_number=None):
+    """This function convert Latitude and Longitude to UTM coordinate
+
+        Parameters
+        ----------
+        latitude: float
+            Latitude between 80 deg S and 84 deg N, e.g. (-80.0 to 84.0)
+
+        longitude: float
+            Longitude between 180 deg W and 180 deg E, e.g. (-180.0 to 180.0).
+
+        force_zone number: int
+            Zone Number is represented with global map numbers of an UTM Zone
+            Numbers Map. You may force conversion including one UTM Zone Number.
+            More information see utmzones [1]_
+
+       .. _[1]: http://www.jaworski.ca/utmzones.htm
+    """
     if not -80.0 <= latitude <= 84.0:
         raise OutOfRangeError('latitude out of range (must be between 80 deg S and 84 deg N)')
     if not -180.0 <= longitude <= 180.0:
