@@ -1,6 +1,13 @@
 Changelog
 =========
 
+v0.4.2
+------
+
+* added optional ``strict`` option to ``to_latlon()``
+* added ``LICENSE`` file
+
+
 v0.4.1
 ------
 
