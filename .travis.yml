@@ -11,7 +11,8 @@ install:
   - pip install pytest-cov codecov
 
 script:
-  - py.test -v --cov
+  - pip install --no-deps -e .
+  - py.test -v --cov=utm
 
 after_success:
   - codecov
