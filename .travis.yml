@@ -7,7 +7,14 @@ python:
   - "2.7"
   - "2.6"
 
-script:  py.test -v
+install:
+  - pip install pytest-cov codecov
+
+script:
+  - py.test -v --cov
+
+after_success:
+  - codecov
 
 deploy:
   provider: pypi
