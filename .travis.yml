@@ -6,8 +6,13 @@ python:
   - "3.3"
   - "2.7"
   - "2.6"
+env:
+  - USE_NUMPY=0
+  - USE_NUMPY=1
 
 install:
+  - if [[ $USE_NUMPY == 0 ]]; then pip uninstall numpy --yes; fi
+  - if [[ $USE_NUMPY == 1 ]]; then pip install --upgrade numpy; fi
   - pip install pytest-cov codecov
 
 script:
