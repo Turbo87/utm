@@ -12,7 +12,7 @@ env:
 
 install:
   - if [[ $USE_NUMPY == 0 ]]; then pip uninstall numpy --yes; fi
-  - if [[ $USE_NUMPY == 1 ]]; then pip install --upgrade numpy; fi
+  - if [[ $USE_NUMPY == 1 ]]; then pip install numpy; fi  # Don't upgrade if present
   - pip install pytest-cov codecov
 
 script:
