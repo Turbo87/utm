@@ -231,5 +231,22 @@ class Zone32V(unittest.TestCase):
         self.assert_zone_equal(UTM.from_latlon(64, 12), 33, 'W')
 
 
+class TestRightBoundaries(unittest.TestCase):
+
+    def assert_zone_equal(self, result, expected_number):
+        self.assertEqual(result[2], expected_number)
+
+    def test_limits(self):
+        self.assert_zone_equal(UTM.from_latlon(40, 0), 31)
+        self.assert_zone_equal(UTM.from_latlon(40, 5.999999), 31)
+        self.assert_zone_equal(UTM.from_latlon(40, 6), 32)
+
+        self.assert_zone_equal(UTM.from_latlon(72, 0), 31)
+        self.assert_zone_equal(UTM.from_latlon(72, 5.999999), 31)
+        self.assert_zone_equal(UTM.from_latlon(72, 6), 31)
+        self.assert_zone_equal(UTM.from_latlon(72, 8.999999), 31)
+        self.assert_zone_equal(UTM.from_latlon(72, 9), 33)
+
+
 if __name__ == '__main__':
     unittest.main()
