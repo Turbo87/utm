@@ -1,12 +1,26 @@
 language: python
 python:
+  - "3.6"
   - "3.5"
   - "3.4"
   - "3.3"
   - "2.7"
   - "2.6"
+env:
+  - USE_NUMPY=0
+  - USE_NUMPY=1
 
-script:  py.test -v
+install:
+  - if [[ $USE_NUMPY == 0 ]]; then pip uninstall numpy --yes; fi
+  - if [[ $USE_NUMPY == 1 ]]; then pip install numpy; fi  # Don't upgrade if present
+  - pip install pytest-cov codecov
+
+script:
+  - pip install --no-deps -e .
+  - py.test -v --cov=utm
+
+after_success:
+  - codecov
 
 deploy:
   provider: pypi
