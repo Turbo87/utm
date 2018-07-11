@@ -50,6 +50,17 @@ def in_bounds(x, lower, upper, upper_strict=False):
     return lower <= x <= upper
 
 
+def check_valid_zone(zone_number, zone_letter):
+    if not 1 <= zone_number <= 60:
+        raise OutOfRangeError('zone number out of range (must be between 1 and 60)')
+
+    if zone_letter:
+        zone_letter = zone_letter.upper()
+
+        if not 'C' <= zone_letter <= 'X' or zone_letter in ['I', 'O']:
+            raise OutOfRangeError('zone letter out of range (must be between C and X)')
+
+
 def mixed_signs(x):
     return use_numpy and mathlib.min(x) < 0 and mathlib.max(x) >= 0
 
@@ -97,15 +108,11 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
             raise OutOfRangeError('easting out of range (must be between 100.000 m and 999.999 m)')
         if not in_bounds(northing, 0, 10000000):
             raise OutOfRangeError('northing out of range (must be between 0 m and 10.000.000 m)')
-    if not 1 <= zone_number <= 60:
-        raise OutOfRangeError('zone number out of range (must be between 1 and 60)')
-
+    
+    check_valid_zone(zone_number, zone_letter)
+    
     if zone_letter:
         zone_letter = zone_letter.upper()
-
-        if not 'C' <= zone_letter <= 'X' or zone_letter in ['I', 'O']:
-            raise OutOfRangeError('zone letter out of range (must be between C and X)')
-
         northern = (zone_letter >= 'N')
 
     x = easting - 500000
@@ -183,6 +190,8 @@ def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=N
         raise OutOfRangeError('latitude out of range (must be between 80 deg S and 84 deg N)')
     if not in_bounds(longitude, -180.0, 180.0):
         raise OutOfRangeError('longitude out of range (must be between 180 deg W and 180 deg E)')
+    if force_zone_number is not None:
+        check_valid_zone(force_zone_number, force_zone_letter)
 
     lat_rad = mathlib.radians(latitude)
     lat_sin = mathlib.sin(lat_rad)

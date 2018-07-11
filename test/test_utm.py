@@ -303,6 +303,25 @@ class TestRightBoundaries(unittest.TestCase):
         self.assert_zone_equal(UTM.from_latlon(72, 8.999999), 31)
         self.assert_zone_equal(UTM.from_latlon(72, 9), 33)
 
+
+class TestValidZones(unittest.TestCase):
+    def test_valid_zones(self):
+        # should not raise any exceptions
+        UTM.check_valid_zone(10, 'C')
+        UTM.check_valid_zone(10, 'X')
+        UTM.check_valid_zone(10, 'p')
+        UTM.check_valid_zone(10, 'q')
+        UTM.check_valid_zone(20, 'X')
+        UTM.check_valid_zone(1, 'X')
+        UTM.check_valid_zone(60, 'e')
+
+    def test_invalid_zones(self):
+        self.assertRaises(UTM.OutOfRangeError, UTM.check_valid_zone, -100, 'C')
+        self.assertRaises(UTM.OutOfRangeError, UTM.check_valid_zone, 20, 'I')
+        self.assertRaises(UTM.OutOfRangeError, UTM.check_valid_zone, 20, 'O')
+        self.assertRaises(UTM.OutOfRangeError, UTM.check_valid_zone, 0, 'O')
+
+
 class TestForcingZones(unittest.TestCase):
     def assert_zone_equal(self, result, expected_number, expected_letter):
         self.assertEqual(result[2], expected_number)
@@ -312,6 +331,9 @@ class TestForcingZones(unittest.TestCase):
         # test forcing zone ranges
         # NYC should be zone 18T
         self.assert_zone_equal(UTM.from_latlon(40.71435, -74.00597, 19, 'T'), 19, 'T')
+        self.assert_zone_equal(UTM.from_latlon(40.71435, -74.00597, 17, 'T'), 17, 'T')
+        self.assert_zone_equal(UTM.from_latlon(40.71435, -74.00597, 18, 'u'), 18, 'U')
+        self.assert_zone_equal(UTM.from_latlon(40.71435, -74.00597, 18, 'S'), 18, 'S')
 
 if __name__ == '__main__':
     unittest.main()
