@@ -1,4 +1,4 @@
-from utm.error import OutOfRangeError
+from error import OutOfRangeError
 
 # For most use cases in this module, numpy is indistinguishable
 # from math, except it also works on numpy arrays
@@ -73,29 +73,21 @@ def negative(x):
 
 def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, strict=True):
     """This function convert an UTM coordinate into Latitude and Longitude
-
         Parameters
         ----------
         easting: int
             Easting value of UTM coordinate
-
         northing: int
             Northing value of UTM coordinate
-
         zone number: int
             Zone Number is represented with global map numbers of an UTM Zone
             Numbers Map. More information see utmzones [1]_
-
         zone_letter: str
             Zone Letter can be represented as string values. Where UTM Zone
             Designators can be accessed in [1]_
-
         northern: bool
             You can set True or False to set this parameter. Default is None
-
-
        .. _[1]: http://www.jaworski.ca/utmzones.htm
-
     """
     if not zone_letter and northern is None:
         raise ValueError('either zone_letter or northern needs to be set')
@@ -170,20 +162,16 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
 
 def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=None):
     """This function convert Latitude and Longitude to UTM coordinate
-
         Parameters
         ----------
         latitude: float
             Latitude between 80 deg S and 84 deg N, e.g. (-80.0 to 84.0)
-
         longitude: float
             Longitude between 180 deg W and 180 deg E, e.g. (-180.0 to 180.0).
-
         force_zone number: int
             Zone Number is represented with global map numbers of an UTM Zone
             Numbers Map. You may force conversion including one UTM Zone Number.
             More information see utmzones [1]_
-
        .. _[1]: http://www.jaworski.ca/utmzones.htm
     """
     if not in_bounds(latitude, -80.0, 84.0):
@@ -237,12 +225,12 @@ def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=N
     northing = K0 * (m + n * lat_tan * (a2 / 2 +
                                         a4 / 24 * (5 - lat_tan2 + 9 * c + 4 * c**2) +
                                         a6 / 720 * (61 - 58 * lat_tan2 + lat_tan4 + 600 * c - 330 * E_P2)))
-
+    
     if mixed_signs(latitude):
         raise ValueError("latitudes must all have the same sign")
-    elif negative(latitude):
+    if zone_letter <= "M":
         northing += 10000000
-
+        
     return easting, northing, zone_number, zone_letter
 
 
