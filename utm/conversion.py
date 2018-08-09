@@ -1,4 +1,4 @@
-from error import OutOfRangeError
+from utm.error import OutOfRangeError
 
 # For most use cases in this module, numpy is indistinguishable
 # from math, except it also works on numpy arrays
@@ -228,11 +228,10 @@ def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=N
     
     if mixed_signs(latitude):
         raise ValueError("latitudes must all have the same sign")
-    if zone_letter <= "M":
+    elif zone_letter <= "M":
         northing += 10000000
         
     return easting, northing, zone_number, zone_letter
-
 
 def latitude_to_zone_letter(latitude):
     # If the input is a numpy array, just use the first element
