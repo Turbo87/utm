@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='utm',
-    version='0.4.2',
+    version='0.5.0',
     author='Tobias Bieniek',
     author_email='Tobias.Bieniek@gmx.de',
     url='https://github.com/Turbo87/utm',

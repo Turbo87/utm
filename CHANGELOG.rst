@@ -1,6 +1,14 @@
 Changelog
 =========
 
+v0.5.0
+------
+
+* Add zone checking when forced
+* Implement numpy support
+* Fix UTM zones boundaries
+
+
 v0.4.2
 ------
 
