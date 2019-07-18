@@ -51,15 +51,21 @@ def in_bounds(x, lower, upper, upper_strict=False):
     return lower <= x <= upper
 
 
-def check_valid_zone(zone_number, zone_letter):
+def check_valid_zone_letter(zone_letter):
+    zone_letter = zone_letter.upper()
+    if not 'C' <= zone_letter <= 'X' or zone_letter in ['I', 'O']:
+        raise OutOfRangeError('zone letter out of range (must be between C and X)')
+
+
+def check_valid_zone_number(zone_number):
     if not 1 <= zone_number <= 60:
         raise OutOfRangeError('zone number out of range (must be between 1 and 60)')
 
-    if zone_letter:
-        zone_letter = zone_letter.upper()
 
-        if not 'C' <= zone_letter <= 'X' or zone_letter in ['I', 'O']:
-            raise OutOfRangeError('zone letter out of range (must be between C and X)')
+def check_valid_zone(zone_number, zone_letter):
+    check_valid_zone_number(zone_number)
+    if zone_letter:
+        check_valid_zone_letter(zone_letter)
 
 
 def mixed_signs(x):
@@ -119,9 +125,9 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
             raise OutOfRangeError('easting out of range (must be between 100,000 m and 999,999 m)')
         if not in_bounds(northing, 0, 10000000):
             raise OutOfRangeError('northing out of range (must be between 0 m and 10,000,000 m)')
-    
+
     check_valid_zone(zone_number, zone_letter)
-    
+
     if zone_letter:
         zone_letter = zone_letter.upper()
         northern = (zone_letter >= 'N')
@@ -331,4 +337,13 @@ def latlon_to_zone_number(latitude, longitude):
 
 
 def zone_number_to_central_longitude(zone_number):
+    check_valid_zone_number(zone_number)
     return (zone_number - 1) * 6 - 180 + 3
+
+def zone_letter_to_central_latitude(zone_letter):
+    check_valid_zone_letter(zone_letter)
+    zone_letter = zone_letter.upper()
+    if zone_letter == 'X':
+        return 78
+    else:
+        return -76 + (ZONE_LETTERS.index(zone_letter) * 8)
