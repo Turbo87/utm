@@ -285,3 +285,9 @@ def latlon_to_zone_number(latitude, longitude):
 
 def zone_number_to_central_longitude(zone_number):
     return (zone_number - 1) * 6 - 180 + 3
+
+def zone_letter_to_central_latitude(zone_letter):
+    if zone_letter == 'X':
+        return 78
+    else:
+        return -76 + (ZONE_LETTERS.index(zone_letter) * 8)
