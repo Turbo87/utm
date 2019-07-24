@@ -335,5 +335,21 @@ class TestForcingZones(unittest.TestCase):
         self.assert_zone_equal(UTM.from_latlon(40.71435, -74.00597, 18, 'u'), 18, 'U')
         self.assert_zone_equal(UTM.from_latlon(40.71435, -74.00597, 18, 'S'), 18, 'S')
 
+
+class TestCentroidConversions(unittest.TestCase):
+    def test_num_to_lon(self):
+        self.assertEqual(UTM.zone_number_to_central_longitude(1),  -177)
+        self.assertEqual(UTM.zone_number_to_central_longitude(12), -111)
+        self.assertEqual(UTM.zone_number_to_central_longitude(16),  -87)
+        self.assertEqual(UTM.zone_number_to_central_longitude(31),    3)
+        self.assertEqual(UTM.zone_number_to_central_longitude(37),   39)
+
+    def test_letter_to_lat(self):
+        self.assertEqual(UTM.zone_letter_to_central_latitude('X'),  78)
+        self.assertEqual(UTM.zone_letter_to_central_latitude('C'), -76)
+        self.assertEqual(UTM.zone_letter_to_central_latitude('E'), -60)
+        self.assertEqual(UTM.zone_letter_to_central_latitude('F'), -52)
+        self.assertEqual(UTM.zone_letter_to_central_latitude('Q'),  20)
+
 if __name__ == '__main__':
     unittest.main()
