@@ -71,6 +71,11 @@ def negative(x):
     return x < 0
 
 
+def mod_angle(value):
+    """Returns angle in radians to be between -pi and pi"""
+    return (value + mathlib.pi) % (2 * mathlib.pi) - mathlib.pi
+
+
 def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, strict=True):
     """This function convert an UTM coordinate into Latitude and Longitude
 
@@ -164,8 +169,10 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
                  d3 / 6 * (1 + 2 * p_tan2 + c) +
                  d5 / 120 * (5 - 2 * c + 28 * p_tan2 - 3 * c2 + 8 * E_P2 + 24 * p_tan4)) / p_cos
 
+    longitude = mod_angle(longitude + mathlib.radians(zone_number_to_central_longitude(zone_number)))
+
     return (mathlib.degrees(latitude),
-            mathlib.degrees(longitude) + zone_number_to_central_longitude(zone_number))
+            mathlib.degrees(longitude))
 
 
 def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=None):
@@ -218,7 +225,7 @@ def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=N
     n = R / mathlib.sqrt(1 - E * lat_sin**2)
     c = E_P2 * lat_cos**2
 
-    a = lat_cos * (lon_rad - central_lon_rad)
+    a = lat_cos * mod_angle(lon_rad - central_lon_rad)
     a2 = a * a
     a3 = a2 * a
     a4 = a3 * a
