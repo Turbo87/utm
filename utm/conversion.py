@@ -161,7 +161,7 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
     n = R / ep_sin_sqrt
     r = (1 - E) / ep_sin
 
-    c = _E * p_cos**2
+    c = E_P2 * p_cos**2
     c2 = c * c
 
     d = x / (n * K0)
