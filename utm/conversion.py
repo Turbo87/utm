@@ -72,26 +72,37 @@ def negative(x):
 
 
 def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, strict=True):
-    """This function convert an UTM coordinate into Latitude and Longitude
+    """This function converts UTM coordinates to Latitude and Longitude
 
         Parameters
         ----------
-        easting: int
-            Easting value of UTM coordinate
+        easting: int or NumPy array
+            Easting value of UTM coordinates
 
-        northing: int
-            Northing value of UTM coordinate
+        northing: int or NumPy array
+            Northing value of UTM coordinates
 
-        zone number: int
-            Zone Number is represented with global map numbers of an UTM Zone
-            Numbers Map. More information see utmzones [1]_
+        zone_number: int
+            Zone number is represented with global map numbers of a UTM zone
+            numbers map. For more information see utmzones [1]_
 
         zone_letter: str
-            Zone Letter can be represented as string values. Where UTM Zone
-            Designators can be accessed in [1]_
+            Zone letter can be represented as string values.  UTM zone
+            designators can be seen in [1]_
 
         northern: bool
             You can set True or False to set this parameter. Default is None
+
+        strict: bool
+            Raise an OutOfRangeError if outside of bounds
+
+        Returns
+        -------
+        latitude: float or NumPy array
+            Latitude between 80 deg S and 84 deg N, e.g. (-80.0 to 84.0)
+
+        longitude: float or NumPy array
+            Longitude between 180 deg W and 180 deg E, e.g. (-180.0 to 180.0).
 
 
        .. _[1]: http://www.jaworski.ca/utmzones.htm
@@ -105,9 +116,9 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
 
     if strict:
         if not in_bounds(easting, 100000, 1000000, upper_strict=True):
-            raise OutOfRangeError('easting out of range (must be between 100.000 m and 999.999 m)')
+            raise OutOfRangeError('easting out of range (must be between 100,000 m and 999,999 m)')
         if not in_bounds(northing, 0, 10000000):
-            raise OutOfRangeError('northing out of range (must be between 0 m and 10.000.000 m)')
+            raise OutOfRangeError('northing out of range (must be between 0 m and 10,000,000 m)')
     
     check_valid_zone(zone_number, zone_letter)
     
@@ -169,20 +180,41 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
 
 
 def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=None):
-    """This function convert Latitude and Longitude to UTM coordinate
+    """This function converts Latitude and Longitude to UTM coordinate
 
         Parameters
         ----------
-        latitude: float
+        latitude: float or NumPy array
             Latitude between 80 deg S and 84 deg N, e.g. (-80.0 to 84.0)
 
-        longitude: float
+        longitude: float or NumPy array
             Longitude between 180 deg W and 180 deg E, e.g. (-180.0 to 180.0).
 
-        force_zone number: int
-            Zone Number is represented with global map numbers of an UTM Zone
-            Numbers Map. You may force conversion including one UTM Zone Number.
-            More information see utmzones [1]_
+        force_zone_number: int
+            Zone number is represented by global map numbers of an UTM zone
+            numbers map. You may force conversion to be included within one
+            UTM zone number.  For more information see utmzones [1]_
+
+        force_zone_letter: str
+            You may force conversion to be included within one UTM zone
+            letter.  For more information see utmzones [1]_
+
+        Returns
+        -------
+        easting: float or NumPy array
+            Easting value of UTM coordinates
+
+        northing: float or NumPy array
+            Northing value of UTM coordinates
+
+        zone_number: int
+            Zone number is represented by global map numbers of a UTM zone
+            numbers map. More information see utmzones [1]_
+
+        zone_letter: str
+            Zone letter is represented by a string value. UTM zone designators
+            can be accessed in [1]_
+
 
        .. _[1]: http://www.jaworski.ca/utmzones.htm
     """
