@@ -1,6 +1,15 @@
 Changelog
 =========
 
+v0.6.0
+------
+
+* Drop support for Python 2.6 and 3.3 (#53)
+* Improve documentation (#50)
+* Fix issue near anti-meridian when forcing zones (#47)
+* Improve `to_latlon()` accuracy (#49)
+
+
 v0.5.0
 ------
 
