@@ -1,6 +1,13 @@
 Changelog
 =========
 
+v0.7.0
+------
+
+* Add support for Python 3.7, 3.8 and 3.9 (#54)
+* Drop support for Python 3.4
+
+
 v0.6.0
 ------
 
