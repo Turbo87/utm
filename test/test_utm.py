@@ -352,5 +352,10 @@ class TestForcingAntiMeridian(unittest.TestCase):
             UTM.from_latlon(0, -179.9, 60, 'N'), -179.9)
 
 
+class TestProject(unittest.TestCase):
+    def test_version(self):
+        self.assertTrue(isinstance(UTM.__version__, str) and '.' in UTM.__version__)
+
+
 if __name__ == '__main__':
     unittest.main()
