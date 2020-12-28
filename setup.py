@@ -1,8 +1,11 @@
 from distutils.core import setup
 
+from utm._version import __version__
+
+
 setup(
     name='utm',
-    version='0.7.0',
+    version=__version__,
     author='Tobias Bieniek',
     author_email='Tobias.Bieniek@gmx.de',
     url='https://github.com/Turbo87/utm',
