@@ -1,3 +1,4 @@
+from __future__ import division
 from utm.error import OutOfRangeError
 
 # For most use cases in this module, numpy is indistinguishable
@@ -16,7 +17,7 @@ K0 = 0.9996
 E = 0.00669438
 E2 = E * E
 E3 = E2 * E
-E_P2 = E / (1.0 - E)
+E_P2 = E / (1 - E)
 
 SQRT_E = mathlib.sqrt(1 - E)
 _E = (1 - SQRT_E) / (1 + SQRT_E)
@@ -30,10 +31,10 @@ M2 = (3 * E / 8 + 3 * E2 / 32 + 45 * E3 / 1024)
 M3 = (15 * E2 / 256 + 45 * E3 / 1024)
 M4 = (35 * E3 / 3072)
 
-P2 = (3. / 2 * _E - 27. / 32 * _E3 + 269. / 512 * _E5)
-P3 = (21. / 16 * _E2 - 55. / 32 * _E4)
-P4 = (151. / 96 * _E3 - 417. / 128 * _E5)
-P5 = (1097. / 512 * _E4)
+P2 = (3 / 2 * _E - 27 / 32 * _E3 + 269 / 512 * _E5)
+P3 = (21 / 16 * _E2 - 55 / 32 * _E4)
+P4 = (151 / 96 * _E3 - 417 / 128 * _E5)
+P5 = (1097 / 512 * _E4)
 
 R = 6378137
 
@@ -225,9 +226,9 @@ def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=N
 
        .. _[1]: http://www.jaworski.ca/utmzones.htm
     """
-    if not in_bounds(latitude, -80.0, 84.0):
+    if not in_bounds(latitude, -80, 84):
         raise OutOfRangeError('latitude out of range (must be between 80 deg S and 84 deg N)')
-    if not in_bounds(longitude, -180.0, 180.0):
+    if not in_bounds(longitude, -180, 180):
         raise OutOfRangeError('longitude out of range (must be between 180 deg W and 180 deg E)')
     if force_zone_number is not None:
         check_valid_zone(force_zone_number, force_zone_letter)
