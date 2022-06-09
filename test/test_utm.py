@@ -356,3 +356,16 @@ def test_force_west():
 
 def test_version():
     assert isinstance(UTM.__version__, str) and "." in UTM.__version__
+
+
+@pytest.mark.skipif(not use_numpy, reason="numpy not installed")
+def test_numpy_args_not_modified():
+    TEST_EASTING = 387358.0
+    TEST_NORTHING = 8145567.0
+    easting = np.array(TEST_EASTING)
+    northing = np.array(TEST_NORTHING)
+    zone = 55
+    letter = "K"
+    UTM.to_latlon(easting, northing, zone, letter)
+    assert easting == TEST_EASTING
+    assert northing == TEST_NORTHING
