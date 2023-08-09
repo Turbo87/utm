@@ -28,7 +28,7 @@ jobs:
           - false
 
     name: "Tests (Python v${{ matrix.python-version }}, NumPy: ${{ matrix.numpy }})"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
 
