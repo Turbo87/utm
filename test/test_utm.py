@@ -87,6 +87,18 @@ known_values = [
         (377486, 6296562, 30, "V"),
         {"northern": True},
     ),
+    # Bergen, Norway
+    (
+        (60.38952, 5.320675),
+        (297264, 6700454, 32, "V"),
+        {"northern": True},
+    ),
+    # Alkefjellet, Spitsbergen, Svalbard
+    (
+        (79.45574, 18.76338),
+        (576830, 8823320, 33, "X"),
+        {"northern": True},
+    ),
     # Latitude 84
     (
         (84, -5.00601),
