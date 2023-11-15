@@ -26,9 +26,6 @@ def assert_utm_equal(a, b):
 
 def assert_latlon_equal(a, b):
     def longitude_close(lon1, lon2, rtol=1e-4, atol=1e-4):
-        # Normalize longitudes to be within the [-180, 180] range
-        lon1 = (lon1 + 180) % 360 - 180
-        lon2 = (lon2 + 180) % 360 - 180
         # Check if longitudes are close after normalization
         is_close = functools.partial(np.isclose, lon1, rtol=rtol, atol=atol)
         return is_close(lon2) or is_close(lon2 - 360) or is_close(lon2 + 360)
