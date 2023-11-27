@@ -307,6 +307,9 @@ def latlon_to_zone_number(latitude, longitude):
         if isinstance(longitude, mathlib.ndarray):
             longitude = longitude.flat[0]
 
+    # Normalize longitude to be in the range [-180, 180)
+    longitude = (longitude % 360 + 540) % 360 - 180
+
     # Special zone for Norway
     if 56 <= latitude < 64 and 3 <= longitude < 12:
         return 32
@@ -321,11 +324,7 @@ def latlon_to_zone_number(latitude, longitude):
         elif longitude < 42:
             return 37
 
-    zone_number = int((longitude + 180) / 6) + 1
-    # Handle edge case of longitude = 180
-    if zone_number > 60:
-        zone_number = 1
-    return zone_number
+    return int((longitude + 180) / 6) + 1
 
 
 def zone_number_to_central_longitude(zone_number):
