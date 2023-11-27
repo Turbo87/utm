@@ -106,14 +106,14 @@ known_values = [
     (
         (0, 180),
         (166021, 0, 1, "N"),
-        {"northern": True}
+        {"northern": True},
     ),
     # West-most point on the Equator
     (
         (0, -180),
         (166021, 0, 1, "N"),
         {"northern": True}
-    )
+    ),
 ]
 
 
