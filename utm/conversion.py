@@ -187,7 +187,7 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
             mathlib.degrees(longitude))
 
 
-def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=None):
+def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=None, negative_northing=False):
     """This function converts Latitude and Longitude to UTM coordinate
 
         Parameters
@@ -278,6 +278,9 @@ def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=N
                                         a4 / 24 * (5 - lat_tan2 + 9 * c + 4 * c**2) +
                                         a6 / 720 * (61 - 58 * lat_tan2 + lat_tan4 + 600 * c - 330 * E_P2)))
 
+    if negative_northing:
+        return easting, northing, zone_number, zone_letter
+    
     if mixed_signs(latitude):
         raise ValueError("latitudes must all have the same sign")
     elif negative(latitude):
