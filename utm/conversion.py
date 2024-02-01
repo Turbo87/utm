@@ -304,9 +304,13 @@ def latlon_to_zone_number(latitude, longitude):
         if isinstance(longitude, mathlib.ndarray):
             longitude = longitude.flat[0]
 
+    # Normalize longitude to be in the range [-180, 180)
+    longitude = (longitude % 360 + 540) % 360 - 180
+
+    # Special zone for Norway
     if 56 <= latitude < 64 and 3 <= longitude < 12:
         return 32
-
+    # Special zones for Svalbard
     if 72 <= latitude <= 84 and longitude >= 0:
         if longitude < 9:
             return 31
