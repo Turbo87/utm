@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 from utm._version import __version__
 
