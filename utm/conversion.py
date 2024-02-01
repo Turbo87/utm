@@ -133,10 +133,7 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
         northern = (zone_letter >= 'N')
 
     x = easting - 500000
-    y = northing
-
-    if not northern:
-        y -= 10000000
+    y = northing if northern else northing - 10000000
 
     m = y / K0
     mu = m / (R * M1)
