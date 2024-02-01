@@ -2,6 +2,9 @@ from setuptools import setup
 
 from utm._version import __version__
 
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.rst").read_text()
 
 setup(
     name='utm',
@@ -10,6 +13,8 @@ setup(
     author_email='Tobias.Bieniek@gmx.de',
     url='https://github.com/Turbo87/utm',
     description='Bidirectional UTM-WGS84 converter for python',
+    long_description=long_description,
+    long_description_content_type='text/x-rst',
     keywords=['utm', 'wgs84', 'coordinate', 'converter'],
     classifiers=[
         'Programming Language :: Python',
