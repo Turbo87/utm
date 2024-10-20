@@ -163,9 +163,9 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
     d5 = d4 * d
     d6 = d5 * d
 
-    latitude = (p_rad - (p_tan / r) *
-                (d2 / 2 -
-                 d4 / 24 * (5 + 3 * p_tan2 + 10 * c - 4 * c2 - 9 * E_P2)) +
+    latitude = p_rad - (p_tan / r) * (
+                 d2 / 2 -
+                 d4 / 24 * (5 + 3 * p_tan2 + 10 * c - 4 * c2 - 9 * E_P2) +
                  d6 / 720 * (61 + 90 * p_tan2 + 298 * c + 45 * p_tan4 - 252 * E_P2 - 3 * c2))
 
     longitude = (d -
