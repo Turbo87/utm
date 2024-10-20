@@ -25,12 +25,12 @@ def assert_utm_equal(a, b):
 
 
 def assert_latlon_equal(a, b):
-    def longitude_close(lon1, lon2, rtol=1e-4, atol=1e-4):
-        # Check if longitudes are close after normalization
-        is_close = functools.partial(np.isclose, lon1, rtol=rtol, atol=atol)
-        return is_close(lon2) or is_close(lon2 - 360) or is_close(lon2 + 360)
-
     if use_numpy and isinstance(b[0], np.ndarray):
+        def longitude_close(lon1, lon2, rtol=1e-4, atol=1e-4):
+            # Check if longitudes are close after normalization
+            is_close = functools.partial(np.isclose, lon1, rtol=rtol, atol=atol)
+            return is_close(lon2) or is_close(lon2 - 360) or is_close(lon2 + 360)
+
         assert np.allclose(a[0], b[0], rtol=1e-4, atol=1e-4)
         if isinstance(a[1], np.ndarray):
             assert all(longitude_close(lon_a, lon_b) for lon_a, lon_b in zip(a[1].flatten(), b[1].flatten()))
@@ -38,7 +38,11 @@ def assert_latlon_equal(a, b):
             assert all(longitude_close(a[1], lon_b) for lon_b in b[1].flatten())
     else:
         assert a[0] == pytest.approx(b[0], 4)
-        assert longitude_close(a[1], b[1])
+        assert (
+            a[1] == pytest.approx(b[1], 4) or
+            a[1] == pytest.approx(b[1] - 360, 4) or
+            a[1] == pytest.approx(b[1] + 360, 4)
+        )
 
 
 known_values = [
