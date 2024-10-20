@@ -2,6 +2,7 @@ from __future__ import division
 
 import utm as UTM
 
+import functools
 import pytest
 
 try:
@@ -24,12 +25,20 @@ def assert_utm_equal(a, b):
 
 
 def assert_latlon_equal(a, b):
+    def longitude_close(lon1, lon2, rtol=1e-4, atol=1e-4):
+        # Check if longitudes are close after normalization
+        is_close = functools.partial(np.isclose, lon1, rtol=rtol, atol=atol)
+        return is_close(lon2) or is_close(lon2 - 360) or is_close(lon2 + 360)
+
     if use_numpy and isinstance(b[0], np.ndarray):
         assert np.allclose(a[0], b[0], rtol=1e-4, atol=1e-4)
-        assert np.allclose(a[1], b[1], rtol=1e-4, atol=1e-4)
+        if isinstance(a[1], np.ndarray):
+            assert all(longitude_close(lon_a, lon_b) for lon_a, lon_b in zip(a[1].flatten(), b[1].flatten()))
+        else:
+            assert all(longitude_close(a[1], lon_b) for lon_b in b[1].flatten())
     else:
         assert a[0] == pytest.approx(b[0], 4)
-        assert a[1] == pytest.approx(b[1], 4)
+        assert longitude_close(a[1], b[1])
 
 
 known_values = [
@@ -75,11 +84,35 @@ known_values = [
         (377486, 6296562, 30, "V"),
         {"northern": True},
     ),
+    # Bergen, Norway
+    (
+        (60.38952, 5.320675),
+        (297264, 6700454, 32, "V"),
+        {"northern": True},
+    ),
+    # Alkefjellet, Spitsbergen, Svalbard
+    (
+        (79.45574, 18.76338),
+        (576830, 8823320, 33, "X"),
+        {"northern": True},
+    ),
     # Latitude 84
     (
         (84, -5.00601),
         (476594, 9328501, 30, "X"),
         {"northern": True},
+    ),
+    # East-most point on the Equator
+    (
+        (0, 180),
+        (166021, 0, 1, "N"),
+        {"northern": True},
+    ),
+    # West-most point on the Equator
+    (
+        (0, -180),
+        (166021, 0, 1, "N"),
+        {"northern": True}
     ),
 ]
 
@@ -272,6 +305,11 @@ def test_to_latlon_range_checks(easting, northing, zone_number, zone_letter):
         (64, 9, 32, "W"),
         (64, 11.999999, 32, "W"),
         (64, 12, 33, "W"),
+        # test edge:
+        (0, 180, 1, "N"),
+        (0, -180, 1, "N"),
+        (84, 180, 1, "X"),
+        (84, -180, 1, "X"),
     ],
 )
 def test_from_latlon_zones(lat, lon, expected_number, expected_letter):
