@@ -426,10 +426,23 @@ def test_force_numpy(zone):
     # Point above and below equator
     lats = np.array([-0.1, 0.1])
 
-    result = UTM.from_latlon(lats, np.array([0, 0]), 31, zone)
+    with pytest.raises(ValueError,
+                       match="latitudes must all have the same sign"):
+      UTM.from_latlon(lats, np.array([0, 0]), 31, zone)
+
+
+@pytest.mark.skipif(not use_numpy, reason="numpy not installed")
+@pytest.mark.parametrize("force_northern", (True, False))
+def test_force_numpy_force_northern_true(force_northern):
+    # Point above and below equator
+    lats = np.array([-0.1, 0.1])
+
+    result = UTM.from_latlon(
+        lats, np.array([0, 0]), force_northern=force_northern)
     for expected_lat, easting, northing in zip(lats, *result[:2]):
         assert_equal_lat(
-            (easting, northing, result[2], result[3]), expected_lat)
+            (easting, northing, result[2], result[3]), expected_lat,
+            northern=force_northern)
 
 
 def test_force_both():

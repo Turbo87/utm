@@ -62,6 +62,10 @@ def check_valid_zone(zone_number, zone_letter):
             raise OutOfRangeError('zone letter out of range (must be between C and X)')
 
 
+def mixed_signs(x):
+    return use_numpy and mathlib.min(x) < 0 and mathlib.max(x) >= 0
+
+
 def mod_angle(value):
     """Returns angle in radians to be between -pi and pi"""
     return (value + mathlib.pi) % (2 * mathlib.pi) - mathlib.pi
@@ -107,7 +111,6 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
     """
     if not zone_letter and northern is None:
         raise ValueError('either zone_letter or northern needs to be set')
-
     elif zone_letter and northern is not None:
         raise ValueError('set either zone_letter or northern, but not both')
 
@@ -278,7 +281,9 @@ def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=N
                                         a4 / 24 * (5 - lat_tan2 + 9 * c + 4 * c**2) +
                                         a6 / 720 * (61 - 58 * lat_tan2 + lat_tan4 + 600 * c - 330 * E_P2)))
 
-    if not northern:
+    if force_northern is None and mixed_signs(latitude):
+        raise ValueError("latitudes must all have the same sign")
+    elif not northern:
         northing += 10000000
 
     return easting, northing, zone_number, zone_letter
