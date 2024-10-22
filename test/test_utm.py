@@ -421,14 +421,25 @@ def test_force_south():
 
 
 @pytest.mark.skipif(not use_numpy, reason="numpy not installed")
+def test_no_force_numpy():
+    # Point above and below equator
+    lats = np.array([-0.1, 0.1])
+    with pytest.raises(ValueError,
+                       match="latitudes must all have the same sign"):
+      UTM.from_latlon(lats, np.array([0, 0]))
+
+
+@pytest.mark.skipif(not use_numpy, reason="numpy not installed")
 @pytest.mark.parametrize("zone", ('N', 'M'))
 def test_force_numpy(zone):
     # Point above and below equator
     lats = np.array([-0.1, 0.1])
 
-    with pytest.raises(ValueError,
-                       match="latitudes must all have the same sign"):
-      UTM.from_latlon(lats, np.array([0, 0]), 31, zone)
+    result = UTM.from_latlon(
+        lats, np.array([0, 0]), force_zone_letter=zone)
+    for expected_lat, easting, northing in zip(lats, *result[:2]):
+        assert_equal_lat(
+            (easting, northing, result[2], result[3]), expected_lat)
 
 
 @pytest.mark.skipif(not use_numpy, reason="numpy not installed")
