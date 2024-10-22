@@ -280,8 +280,8 @@ def from_latlon(latitude, longitude, force_zone_number=None, force_zone_letter=N
     northing = K0 * (m + n * lat_tan * (a2 / 2 +
                                         a4 / 24 * (5 - lat_tan2 + 9 * c + 4 * c**2) +
                                         a6 / 720 * (61 - 58 * lat_tan2 + lat_tan4 + 600 * c - 330 * E_P2)))
-
-    if force_northern is None and mixed_signs(latitude):
+    check_signs = force_northern is None and force_zone_letter is None
+    if check_signs and mixed_signs(latitude):
         raise ValueError("latitudes must all have the same sign")
     elif not northern:
         northing += 10000000
