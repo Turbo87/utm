@@ -17,16 +17,23 @@ jobs:
       fail-fast: true
       matrix:
         python-version:
+          - "3.13"
           - "3.12"
           - "3.11"
           - "3.10"
           - "3.9"
           - "3.8"
-        numpy:
-          - true
+        numpy-version:
           - false
+          - "1.x"
+          - "2.x"
+        exclude:
+          - python-version: "3.13"
+            numpy-version: "1.x"
+          - python-version: "3.8"
+            numpy-version: "2.x"
 
-    name: "Tests (Python v${{ matrix.python-version }}, NumPy: ${{ matrix.numpy }})"
+    name: "Tests (Python v${{ matrix.python-version }}, NumPy: ${{ matrix.numpy-version }})"
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -37,8 +44,8 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - run: pip install -r numpy-requirements.txt
-        if: matrix.numpy == true
+      - run: pip install -r numpy-${{ matrix.numpy-version }}-requirements.txt
+        if: matrix.numpy-version != false
 
       - run: pytest -v --cov=utm --color=yes
 
@@ -53,11 +60,11 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
       - run: python setup.py sdist
 
-      - uses: pypa/gh-action-pypi-publish@v1.10.3
+      - uses: pypa/gh-action-pypi-publish@v1.12.3
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
