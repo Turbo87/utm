@@ -478,3 +478,33 @@ def test_numpy_args_not_modified():
     UTM.to_latlon(easting, northing, zone, letter)
     assert easting == TEST_EASTING
     assert northing == TEST_NORTHING
+
+
+@pytest.mark.parametrize(
+    "zone_number, expected_lon",
+    [
+        (1,  -177),
+        (12, -111),
+        (16,  -87),
+        (31,    3),
+        (37,   39),
+    ],
+)
+def test_zone_number_to_central_longitude(zone_number, expected_lon):
+    lon = UTM.zone_number_to_central_longitude(zone_number)
+    assert lon == expected_lon
+
+
+@pytest.mark.parametrize(
+    "zone_letter, expected_lat",
+    [
+        ("X",  78),
+        ("C", -76),
+        ("E", -60),
+        ("F", -52),
+        ("Q",  20),
+    ],
+)
+def test_zone_letter_to_central_latitude(zone_letter, expected_lat):
+    lat = UTM.zone_letter_to_central_latitude(zone_letter)
+    assert lat == expected_lat
