@@ -62,6 +62,8 @@ jobs:
         with:
           python-version: "3.13"
 
+      - run: pip install -r release-requirements.txt
+
       - run: python setup.py sdist
 
       - uses: pypa/gh-action-pypi-publish@v1.12.4
