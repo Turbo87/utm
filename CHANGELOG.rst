@@ -1,6 +1,24 @@
 Changelog
 =========
 
+v0.8.0
+------
+
+* Add support for Python 3.10, 3.11, 3.12 and 3.13
+* Drop support for Python 2.7, 3.5, 3.6, 3.7 and 3.8
+* Add version (#62)
+* Convert all tests to pytest (#65)
+* Port to setuptools (#89)
+* Add long description for PyPi (#99)
+* Fix numpy array being modified in place (#86)
+* Fix ``latlon_to_zone_number()`` returning bogus zone 61 for longitude 180 (#110)
+* Fix forcing zones around equator and add ``force_northern`` in ``from_latlon()`` (#124)
+* Improve ``to_latlon()`` accuracy (#120)
+* Update all (test) dependencies, taking into account supported Python versions (e.g. #116, #128)
+* Add ``zone_letter_to_central_latitude()`` as a counterpart to ``zone_number_to_central_longitude()`` (#130)
+* Bring CI script into the 2024 realm
+
+
 v0.7.0
 ------
 
@@ -14,7 +32,7 @@ v0.6.0
 * Drop support for Python 2.6 and 3.3 (#53)
 * Improve documentation (#50)
 * Fix issue near anti-meridian when forcing zones (#47)
-* Improve `to_latlon()` accuracy (#49)
+* Improve ``to_latlon()`` accuracy (#49)
 
 
 v0.5.0
