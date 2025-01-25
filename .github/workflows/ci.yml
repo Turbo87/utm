@@ -64,7 +64,7 @@ jobs:
 
       - run: pip install -r release-requirements.txt
 
-      - run: python setup.py sdist
+      - run: python -m build
 
       - uses: pypa/gh-action-pypi-publish@v1.12.4
         with:
