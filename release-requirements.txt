@@ -1,1 +1,1 @@
-setuptools >= 75, < 76
+build
