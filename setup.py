@@ -27,5 +27,6 @@ setup(
         'Topic :: Scientific/Engineering :: GIS',
     ],
     packages=['utm'],
+    python_requires=">=3",
     scripts=['scripts/utm-converter'],
 )
