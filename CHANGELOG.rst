@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v0.8.1
+------
+
+* Add python_version to bundle metadata, for pypi (#134, #135)
+
+
 v0.8.0
 ------
 
