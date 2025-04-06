@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v...
+------
+
+* Remove Python 2.x leftovers
+
 v0.8.1
 ------
 

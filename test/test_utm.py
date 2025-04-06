@@ -1,5 +1,3 @@
-from __future__ import division
-
 import utm as UTM
 
 import functools
