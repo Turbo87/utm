@@ -4,6 +4,12 @@ Changelog
 Unreleased
 ------
 
+* ...
+
+
+v0.9.0
+------
+
 * Add support for Python 3.14
 * Drop support for Python 3.9 and 3.10
 * Remove dependency definitions for unsupported Python versions
