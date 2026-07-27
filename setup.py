@@ -1,14 +1,25 @@
 from setuptools import setup
-
-from utm._version import __version__
-
 from pathlib import Path
+import re
+
 this_directory = Path(__file__).parent
+
+try:
+    version_file_content = (this_directory / "utm/_version.py").read_text()
+except:
+    raise RuntimeError("Failed to read version file")
+
+version_regex = re.compile(r"^__version__ = (['\"])(?P<version>.*)\1", re.M)
+if (version_match := version_regex.search(version_file_content)):
+    version = version_match.group("version")
+else:
+    raise RuntimeError("Failed to parse version")
+
 long_description = (this_directory / "README.rst").read_text()
 
 setup(
     name='utm',
-    version=__version__,
+    version=version,
     author='Tobias Bieniek',
     author_email='Tobias.Bieniek@gmx.de',
     url='https://github.com/Turbo87/utm',
