@@ -65,7 +65,7 @@ jobs:
 
       - run: python -m build
 
-      - uses: pypa/gh-action-pypi-publish@v1.14.1
+      - uses: pypa/gh-action-pypi-publish@v1.14.2
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
