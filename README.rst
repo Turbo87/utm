@@ -91,9 +91,27 @@ previous test). Using ``utm.from_latlon(x, y)`` to convert one million points:
 Development
 -----------
 
-Create a new ``virtualenv`` and install the library via ``pip install -e .``.
-After that install the ``pytest`` package via ``pip install pytest`` and run
-the unit test suite by calling ``pytest``.
+Setup development environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Using ``uv`` is the easiest:
+
+* Run: ``uv sync``
+
+Using ``pipx``:
+
+* Run: ``pipx install -e . --pip-args="--group dev"``
+
+Using ``pip`` requires manually setting up the virtual environment:
+
+* Create and activate a new ``virtualenv``
+* Run: ``python -m pip install -e . --group dev``
+
+Run tests
+^^^^^^^^^
+
+After preparing the development environment, run the unit test suite by
+calling ``pytest``.
 
 Changelog
 ---------
