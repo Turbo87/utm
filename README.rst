@@ -59,8 +59,8 @@ You can also use NumPy arrays for ``EASTING`` and ``NORTHING``. In the result
 
 .. code-block:: python
 
-    >>> utm.to_latlon(np.array([395200, 456100]), np.array([5673100, 5427600]), 32, 'U')
-    (array([51.19968297, 48.99973627]), array([7.49999141, 8.3998036 ]))
+  >>> utm.to_latlon(np.array([395200, 456100]), np.array([5673100, 5427600]), 32, 'U')
+  (array([51.19968297, 48.99973627]), array([7.49999141, 8.3998036 ]))
 
 
 Since the zone letter is not strictly needed for the conversion you may also
@@ -91,9 +91,27 @@ previous test). Using ``utm.from_latlon(x, y)`` to convert one million points:
 Development
 -----------
 
-Create a new ``virtualenv`` and install the library via ``pip install -e .``.
-After that install the ``pytest`` package via ``pip install pytest`` and run
-the unit test suite by calling ``pytest``.
+Setup development environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Using ``uv`` is the easiest:
+
+* Run: ``uv sync``
+
+Using ``pipx``:
+
+* Run: ``pipx install -e . --pip-args="--group dev"``
+
+Using ``pip`` requires manually setting up the virtual environment:
+
+* Create and activate a new ``virtualenv``
+* Run: ``python -m pip install -e . --group dev``
+
+Run tests
+^^^^^^^^^
+
+After preparing the development environment, run the unit test suite by
+calling ``pytest``.
 
 Changelog
 ---------
@@ -103,17 +121,35 @@ see `CHANGELOG.rst <CHANGELOG.rst>`_ file
 Authors
 -------
 
-* Bart van Andel <bavanandel@gmail.com>
 * Tobias Bieniek <Tobias.Bieniek@gmx.de>
 * Torstein I. Bø
+
+Maintainers
+-----------
+
+* Bart van Andel <bavanandel@gmail.com>
 
 License
 -------
 
-Copyright (C) 2012 Tobias Bieniek <Tobias.Bieniek@gmx.de>
+MIT License
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Copyright (c) 2012-2017 Tobias Bieniek <Tobias.Bieniek@gmx.de>
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

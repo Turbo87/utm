@@ -4,6 +4,7 @@ Changelog
 Unreleased
 ------
 
+* Convert ``setup.py`` to ``pyproject.toml`` (#164)
 * ...
 
 
