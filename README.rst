@@ -59,8 +59,8 @@ You can also use NumPy arrays for ``EASTING`` and ``NORTHING``. In the result
 
 .. code-block:: python
 
-    >>> utm.to_latlon(np.array([395200, 456100]), np.array([5673100, 5427600]), 32, 'U')
-    (array([51.19968297, 48.99973627]), array([7.49999141, 8.3998036 ]))
+  >>> utm.to_latlon(np.array([395200, 456100]), np.array([5673100, 5427600]), 32, 'U')
+  (array([51.19968297, 48.99973627]), array([7.49999141, 8.3998036 ]))
 
 
 Since the zone letter is not strictly needed for the conversion you may also
@@ -103,9 +103,13 @@ see `CHANGELOG.rst <CHANGELOG.rst>`_ file
 Authors
 -------
 
-* Bart van Andel <bavanandel@gmail.com>
 * Tobias Bieniek <Tobias.Bieniek@gmx.de>
 * Torstein I. Bø
+
+Maintainers
+-----------
+
+* Bart van Andel <bavanandel@gmail.com>
 
 License
 -------

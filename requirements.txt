@@ -1,2 +1,0 @@
-pytest==9.1.1; python_version >= '3.10' and python_version < '3.16'
-pytest-cov==7.1.0; python_version >= '3.9' and python_version < '3.15'
