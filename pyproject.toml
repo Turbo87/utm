@@ -53,7 +53,7 @@ dev = [{ include-group = "test" }]
 release = ["build"]
 
 [project.scripts]
-utm-converter = "utm:cli"
+utm-converter = "utm.cli:main"
 
 [project.urls]
 homepage = "https://github.com/Turbo87/utm"
