@@ -5,6 +5,7 @@ Unreleased
 ------
 
 * Convert ``setup.py`` to ``pyproject.toml`` (#164)
+* Show a usage error instead of a traceback when ``utm-converter`` is run without a command
 * ...
 
 

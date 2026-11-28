@@ -5,7 +5,7 @@ import utm
 
 def main():
     parser = argparse.ArgumentParser(description='Bidirectional UTM-WGS84 converter for python')
-    subparsers = parser.add_subparsers()
+    subparsers = parser.add_subparsers(dest='command', required=True)
 
     parser_latlon = subparsers.add_parser('latlon', help='Convert a latitude/longitude pair WGS84 to UTM')
     parser_latlon.add_argument('latitude', type=float, help='Latitude of the WGS84 coordinate')
