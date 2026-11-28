@@ -50,3 +50,12 @@ def test_utm(cli_command, tmp_path):
     assert (float(latitude), float(longitude)) == pytest.approx(
         (51.51843, 6.69388), abs=0.00001
     )
+
+
+def test_missing_command(cli_command, tmp_path):
+    result = subprocess.run(
+        cli_command, cwd=tmp_path, capture_output=True, text=True, check=False
+    )
+    assert result.returncode == 2
+    assert "usage:" in result.stderr
+    assert "Traceback" not in result.stderr
